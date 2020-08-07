@@ -8,7 +8,7 @@ import open3d as o3d
 import carla
 import cv2
 
-from .carla_env import Camera
+from carla_env import Camera
 
 
 class Lidar(object):

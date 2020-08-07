@@ -12,10 +12,10 @@ from pytorch_lightning.loggers import WandbLogger
 from pytorch_lightning.callbacks import ModelCheckpoint
 from PIL import Image, ImageDraw
 
-from .models import SegmentationModel, RawController
-from .utils.heatmap import ToHeatmap
-from .dataset import get_dataset
-from . import common
+from models import SegmentationModel, RawController
+from utils.heatmap import ToHeatmap
+from dataset import get_dataset
+import common
 
 
 @torch.no_grad()
@@ -120,7 +120,7 @@ class MapModel(pl.LightningModule):
             metrics['train_image'] = visualize(batch, out, between, out_cmd, loss_point, loss_cmd, target_heatmap)
 
         self.logger.log_metrics(metrics, self.global_step)
-
+        print(type(loss))
         return {'loss': loss}
 
     def validation_step(self, batch, batch_nb):

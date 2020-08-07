@@ -1,5 +1,8 @@
-from ..dataset import get_dataset
-from .. import common
+import sys
+# TBD: need to be made more portable
+sys.path.insert(0, '/home/zhongzzy9/Documents/self-driving-car/2020_CARLA_challenge/carla_project/src')
+from dataset import get_dataset
+import common
 import tqdm
 import numpy as np
 import matplotlib.pyplot as plt

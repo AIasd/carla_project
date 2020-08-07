@@ -6,10 +6,10 @@ import numpy as np
 
 from PIL import Image, ImageDraw
 
-from .dataset import CarlaDataset
-from .converter import Converter
-from .map_model import MapModel
-from . import common
+from dataset import CarlaDataset
+from converter import Converter
+from map_model import MapModel
+import common
 
 
 net = MapModel.load_from_checkpoint(sys.argv[1])

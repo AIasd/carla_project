@@ -10,11 +10,11 @@ from pytorch_lightning.loggers import WandbLogger
 from pytorch_lightning.callbacks import ModelCheckpoint
 from PIL import Image, ImageDraw
 
-from .map_model import MapModel
-from .models import SegmentationModel
-from .dataset import get_dataset
-from .converter import Converter
-from . import common
+from map_model import MapModel
+from models import SegmentationModel
+from dataset import get_dataset
+from converter import Converter
+import common
 
 
 class RawController(torch.nn.Module):

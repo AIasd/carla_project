@@ -10,8 +10,8 @@ import pandas as pd
 
 from PIL import Image
 
-from .carla_env import CarlaEnv
-from .common import COLOR
+from carla_env import CarlaEnv
+from common import COLOR
 
 
 EPISODE_LENGTH = 1000

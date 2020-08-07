@@ -10,9 +10,9 @@ from torchvision import transforms
 from PIL import Image
 from numpy import nan
 
-from .converter import Converter, PIXELS_PER_WORLD
-from .dataset_wrapper import Wrap
-from . import common
+from converter import Converter, PIXELS_PER_WORLD
+from dataset_wrapper import Wrap
+import common
 
 
 # Reproducibility.
@@ -159,19 +159,16 @@ class CarlaDataset(Dataset):
         frame = self.frames[i]
         meta = '%s %s' % (path.stem, frame)
 
-        rgb = Image.open(path / 'rgb' / ('%s.png' % frame))
-        rgb = transforms.functional.to_tensor(rgb)
-
-        rgb_left = Image.open(path / 'rgb_left' / ('%s.png' % frame))
-        rgb_left = transforms.functional.to_tensor(rgb_left)
-
-        rgb_right = Image.open(path / 'rgb_right' / ('%s.png' % frame))
-        rgb_right = transforms.functional.to_tensor(rgb_right)
-
-        topdown = Image.open(path / 'topdown' / ('%s.png' % frame))
-        topdown = topdown.crop((128, 0, 128 + 256, 256))
-        topdown = np.array(topdown)
-        topdown = preprocess_semantic(topdown)
+        with Image.open(path / 'rgb' / ('%s.png' % frame)) as rgb_image:
+            rgb = transforms.functional.to_tensor(rgb_image)
+        with Image.open(path / 'rgb_left' / ('%s.png' % frame)) as rgb_left_image:
+            rgb_left = transforms.functional.to_tensor(rgb_left_image)
+        with Image.open(path / 'rgb_right' / ('%s.png' % frame)) as rgb_right_image:
+            rgb_right = transforms.functional.to_tensor(rgb_right_image)
+        with Image.open(path / 'topdown' / ('%s.png' % frame)) as topdown_image:
+            topdown = topdown_image.crop((128, 0, 128 + 256, 256))
+            topdown = np.array(topdown)
+            topdown = preprocess_semantic(topdown)
 
         u = np.float32(self.measurements.iloc[i][['x', 'y']])
         theta = self.measurements.iloc[i]['theta']

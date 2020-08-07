@@ -13,13 +13,13 @@ from pytorch_lightning.loggers import WandbLogger
 from pytorch_lightning.callbacks import ModelCheckpoint
 from PIL import Image, ImageDraw
 
-from .map_model import MapModel
-from .models import SegmentationModel, RawController
-from .utils.heatmap import ToHeatmap
-from .dataset import get_dataset
-from .converter import Converter
-from . import common
-from .scripts.cluster_points import points as RANDOM_POINTS
+from map_model import MapModel
+from models import SegmentationModel, RawController
+from utils.heatmap import ToHeatmap
+from dataset import get_dataset
+from converter import Converter
+import common
+from scripts.cluster_points import points as RANDOM_POINTS
 
 
 @torch.no_grad()
@@ -108,7 +108,7 @@ class ImageModel(pl.LightningModule):
         target_cam = self.converter.map_to_cam(target)
         target_heatmap_cam = self.to_heatmap(target, img)[:, None]
         out = self.net(torch.cat((img, target_heatmap_cam), 1))
-
+        # print(out, target)
         return out, (target_cam, target_heatmap_cam)
 
     @torch.no_grad()
