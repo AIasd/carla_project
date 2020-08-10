@@ -95,7 +95,7 @@ class ImageModel(pl.LightningModule):
 
         self.hparams = hparams
         self.to_heatmap = ToHeatmap(hparams.heatmap_radius)
-        
+
         if teacher_path:
             # modifiction: add str
             self.teacher = MapModel.load_from_checkpoint(str(teacher_path))
