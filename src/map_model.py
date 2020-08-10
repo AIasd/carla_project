@@ -80,8 +80,16 @@ class MapModel(pl.LightningModule):
     def __init__(self, hparams):
         super().__init__()
 
-        self.hparams = hparams
+        # addition: convert dict to namespace when necessary
+        # hack:
+        if isinstance(hparams, dict):
+            import argparse
+            args = argparse.Namespace()
+            for k,v in hparams.items():
+                setattr(args, k, v)
+            hparams = args
 
+        self.hparams = hparams
         self.to_heatmap = ToHeatmap(hparams.heatmap_radius)
         self.net = SegmentationModel(10, 4, hack=hparams.hack, temperature=hparams.temperature)
         self.controller = RawController(4)
