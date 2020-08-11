@@ -93,6 +93,15 @@ class ImageModel(pl.LightningModule):
     def __init__(self, hparams, teacher_path=''):
         super().__init__()
 
+        # addition: convert dict to namespace when necessary
+        # hack:
+        if isinstance(hparams, dict):
+            import argparse
+            args = argparse.Namespace()
+            for k,v in hparams.items():
+                setattr(args, k, v)
+            hparams = args
+
         self.hparams = hparams
         self.to_heatmap = ToHeatmap(hparams.heatmap_radius)
 
