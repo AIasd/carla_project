@@ -1,6 +1,6 @@
 import sys
 # TBD: need to be made more portable
-sys.path.insert(0, '/home/zhongzzy9/Documents/self-driving-car/2020_CARLA_challenge/carla_project/src')
+sys.path.insert(0, 'carla_project/src')
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
