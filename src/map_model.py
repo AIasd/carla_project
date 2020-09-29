@@ -13,7 +13,10 @@ from pytorch_lightning.callbacks import ModelCheckpoint
 from PIL import Image, ImageDraw
 
 from models import SegmentationModel, RawController
-from utils.heatmap import ToHeatmap
+try:
+    from src.utils.heatmap import ToHeatmap
+except ModuleNotFoundError as error:
+    from utils.heatmap import ToHeatmap
 from dataset import get_dataset
 import common
 

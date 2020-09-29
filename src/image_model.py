@@ -15,7 +15,11 @@ from PIL import Image, ImageDraw
 
 from map_model import MapModel
 from models import SegmentationModel, RawController
-from utils.heatmap import ToHeatmap
+try:
+    from src.utils.heatmap import ToHeatmap
+except ModuleNotFoundError as error:
+    from utils.heatmap import ToHeatmap
+
 from dataset import get_dataset
 from converter import Converter
 import common
