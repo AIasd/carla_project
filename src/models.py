@@ -44,6 +44,18 @@ class SegmentationModel(torch.nn.Module):
         self.hack = hack
 
         self.norm = torch.nn.BatchNorm2d(input_channels) if batch_norm else lambda x: x
+
+        # import random
+        # import numpy as np
+        # random.seed(0)
+        # np.random.seed(0)
+        # torch.manual_seed(0)
+        # torch.cuda.manual_seed_all(0)
+        # torch.set_deterministic(True)
+        # torch.backends.cudnn.deterministic = True
+        # torch.backends.cudnn.benchmark = False
+        # torch.backends.cudnn.enabled = False
+
         self.network = deeplabv3_resnet50(pretrained=False, num_classes=n_steps)
         self.extract = SpatialSoftmax()
 
@@ -52,16 +64,29 @@ class SegmentationModel(torch.nn.Module):
                 input_channels, old.out_channels,
                 kernel_size=old.kernel_size, stride=old.stride,
                 padding=old.padding, bias=old.bias)
+        self.ini = True
 
     def forward(self, input, heatmap=False):
-        if self.hack:
-            input = torch.nn.functional.interpolate(input, scale_factor=0.5, mode='bilinear')
 
-        x = self.norm(input)
-        x = self.network(x)['out']
 
         if self.hack:
-            x = torch.nn.functional.interpolate(x, scale_factor=2.0, mode='bilinear')
+            input_int = torch.nn.functional.interpolate(input, scale_factor=0.5, mode='nearest')
+        else:
+            input_int = input
+        input_norm = self.norm(input_int)
+
+
+
+
+        x = self.network(input_norm)['out']
+        # if self.ini:
+        #     print('input', input)
+        #     print('input_int', input_int)
+        #     print('input_norm', input_norm)
+        #     print('self.network(x)[out]', x)
+        #     self.ini = False
+        if self.hack:
+            x = torch.nn.functional.interpolate(x, scale_factor=2.0, mode='nearest')
 
         y = self.extract(x, self.temperature)
 

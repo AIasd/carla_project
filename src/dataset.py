@@ -67,7 +67,7 @@ def get_dataset(dataset_dir, is_train=True, batch_size=128, num_workers=4, sampl
     sampler = torch.utils.data.sampler.WeightedRandomSampler(weights, len(weights))
     data = torch.utils.data.ConcatDataset(data)
 
-    return Wrap(data, sampler, batch_size, 1000 if is_train else 100, num_workers)
+    return Wrap(data, sampler, batch_size, 200 if is_train else 20, num_workers)
 
 
 def get_augmenter():
