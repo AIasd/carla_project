@@ -45,6 +45,8 @@ def get_weights(data, key='speed', bins=4):
 
 
 def get_dataset(dataset_dir, is_train=True, batch_size=128, num_workers=4, sample_by='none', **kwargs):
+    print('\n'*3, 'dataset_dir', dataset_dir, '\n'*3)
+    print('Path(dataset_dir).glob()', Path(dataset_dir).glob('*'))
     data = list()
     transform = transforms.Compose([
         get_augmenter() if is_train else lambda x: x,
@@ -52,16 +54,19 @@ def get_dataset(dataset_dir, is_train=True, batch_size=128, num_workers=4, sampl
         ])
 
     episodes = list(sorted(Path(dataset_dir).glob('*')))
+    print('\n'*3, 'dataset_dir', dataset_dir, '\n'*3)
+    print('\n'*3, 'episodes', episodes, '\n'*3)
 
     for i, _dataset_dir in enumerate(episodes):
         add = False
-        add |= (is_train and i % 10 < 9)
+        # use all data to train
+        add |= (is_train and i % 10 <= 9)
         add |= (not is_train and i % 10 >= 9)
 
         if add:
             data.append(CarlaDataset(_dataset_dir, transform, **kwargs))
-
-    print('%d frames.' % sum(map(len, data)))
+    print('data', data)
+    # print('%d frames.' % sum(map(len, data)))
 
     weights = torch.DoubleTensor(get_weights(data, key=sample_by))
     sampler = torch.utils.data.sampler.WeightedRandomSampler(weights, len(weights))
