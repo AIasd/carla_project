@@ -61,7 +61,7 @@ def get_dataset(dataset_dir, is_train=True, batch_size=128, num_workers=4, sampl
         add = False
         # use all data to train
         add |= (is_train and i % 10 <= 9)
-        add |= (not is_train and i % 10 >= 9)
+        add |= (not is_train and i % 10 == 0)
 
         if add:
             data.append(CarlaDataset(_dataset_dir, transform, **kwargs))
