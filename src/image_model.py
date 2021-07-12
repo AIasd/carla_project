@@ -22,7 +22,7 @@ except ModuleNotFoundError as error:
 
 from dataset import get_dataset
 from converter import Converter
-import common
+import src.common as common
 # from scripts.cluster_points import points as RANDOM_POINTS
 
 RANDOM_POINTS = np.float32([

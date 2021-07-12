@@ -2,7 +2,7 @@ import sys
 # TBD: need to be made more portable
 sys.path.insert(0, 'carla_project/src')
 from dataset import get_dataset
-import common
+import src.common as common
 import tqdm
 import numpy as np
 import matplotlib.pyplot as plt

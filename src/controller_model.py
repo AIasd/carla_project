@@ -14,7 +14,7 @@ from map_model import MapModel
 from models import SegmentationModel
 from dataset import get_dataset
 from converter import Converter
-import common
+import src.common as common
 
 
 class RawController(torch.nn.Module):

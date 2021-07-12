@@ -18,7 +18,7 @@ try:
 except ModuleNotFoundError as error:
     from utils.heatmap import ToHeatmap
 from dataset import get_dataset
-import common
+import src.common as common
 
 
 @torch.no_grad()

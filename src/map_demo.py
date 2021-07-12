@@ -9,7 +9,7 @@ from PIL import Image, ImageDraw
 from dataset import CarlaDataset
 from converter import Converter
 from map_model import MapModel
-import common
+import src.common as common
 
 
 net = MapModel.load_from_checkpoint(sys.argv[1])

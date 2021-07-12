@@ -12,7 +12,7 @@ from numpy import nan
 
 from converter import Converter, PIXELS_PER_WORLD
 from dataset_wrapper import Wrap
-import common
+import src.common as common
 
 
 # Reproducibility.
